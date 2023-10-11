@@ -15,7 +15,7 @@ song_order = []
 for root, dirs, files in os.walk(INPUT_DIR, topdown=True):
     if "data.json" in files:
         json_path = os.path.join(root, "data.json")
-        json_dict = json.load(open(json_path, encoding="utf8"))
+        json_dict = json.load(open(json_path, encoding="utf-8-sig"))
         try:
             song_name = json_dict["songName"]["enText"]
         except KeyError:
