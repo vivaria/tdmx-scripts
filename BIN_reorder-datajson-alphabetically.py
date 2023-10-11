@@ -1,7 +1,7 @@
 import os
 import json
 
-CUSTOMSONG_DIR = os.path.join("D:\\", "games", "TaikoTDM", "CustomSongs")
+CUSTOMSONG_DIR = os.path.join("C:\\", "TaikoTDM", "customSongs")
 
 # Step 1. Read in the existing song data
 song_order = []
