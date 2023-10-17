@@ -102,7 +102,7 @@ def write_csv(csv_list):
 def read_jsons(root_dir):
     jsons = {}
     for root, dirs, files in os.walk(root_dir, topdown=True):
-        if "data.json" in files:
+        if "data.json" in files and "uras" not in root:
             json_path = os.path.join(root, "data.json")
             with open(json_path, encoding="utf-8-sig") as f:
                 try:
