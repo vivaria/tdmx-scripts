@@ -2,6 +2,9 @@ import os
 import json
 import csv
 import unicodedata
+import shutil
+import gzip
+import struct
 
 DEBUG = False
 # CUSTOMSONG_DIR = os.path.join("D:\\", "games", "TaikoTDM",
@@ -16,6 +19,7 @@ DATA_JSON = {
     'debut': str,
     'id': str,
     'genreNo': int,
+    'volume': float,
     # Song details
     'songName_enText': str,
     'songSubtitle_enText': str,
@@ -127,6 +131,8 @@ def read_jsons(root_dir):
                         tmp_json[tmp_key] = 0
                     elif key_type == bool:
                         tmp_json[tmp_key] = False
+                    elif key_type == float:
+                        tmp_json[tmp_key] = 0.0
                     else:
                         raise ValueError("Unknown type")
             json_dict['path'] = json_path
@@ -228,6 +234,57 @@ def strip_accents(s):
                    if unicodedata.category(c) != 'Mn')
 
 
+def readStruct(file, format, seek=None):
+    if seek:
+        file.seek(seek)
+    return struct.unpack(">" + format,
+                         file.read(struct.calcsize(">" + format)))
+
+
+def update_volume(jsons):
+    for song_id, json_dict in jsons.items():
+        VOLUME_TO_WRITE = json_dict['volume']
+
+        # Get song filename
+        json_path = json_dict['path']
+        par_dir = os.path.dirname(json_path)
+        song_path = os.path.join(par_dir, f"song_{song_id}.bin")
+        assert os.path.isfile(song_path)
+
+        # Handle gzipped files
+        is_gzipped = json_dict["areFilesGZipped"]
+        if is_gzipped:
+            # backup original song
+            song_path_gzip = song_path + ".gzip"
+            shutil.move(song_path, song_path_gzip)
+            # unzip song
+            with gzip.open(song_path_gzip, 'rb') as f_in:
+                with open(song_path, 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+
+        if not DEBUG:
+            with open(song_path, mode="rb") as fp:
+                volume_float_before = readStruct(fp, "f", seek=0x217)[0]
+            with open(song_path, mode="rb+") as fp:
+                if volume_float_before != VOLUME_TO_WRITE:
+                    byte_string = struct.pack(">f", VOLUME_TO_WRITE)
+                    fp.seek(0x217)
+                    fp.write(byte_string)
+            with open(song_path, mode="rb") as fp:
+                volume_float_after = readStruct(fp, "f", seek=0x217)[0]
+            if volume_float_before != volume_float_after:
+                print(f"Changed volume from {volume_float_before} to "
+                      f"{volume_float_after} for {song_id}.")
+
+        # Rezip song
+        if is_gzipped:
+            # unzip song
+            with open(song_path, 'rb') as f_in:
+                with gzip.open(song_path_gzip, 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+            shutil.move(song_path_gzip, song_path)
+
+
 def main():
     # fetch existing data.json files within the custom song dir
     print(f"\nLoading jsons from {CUSTOMSONG_DIR}...")
@@ -254,6 +311,10 @@ def main():
     # modify the 'order' field of the jsons
     print(f"\nUpdating order field...")
     ordered_jsons = update_order(merged_jsons)
+
+    # update the volume byte of each song according to field
+    print(f"\nUpdating volume...")
+    update_volume(ordered_jsons)
 
     # write the merged list of jsons to csv (but only if there are new entries)
     print(f"\nWriting new {CSV_FILENAME} file...")
