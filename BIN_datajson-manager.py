@@ -230,9 +230,11 @@ def strip_accents(s):
 
 def main():
     # fetch existing data.json files within the custom song dir
+    print(f"\nLoading jsons from {CUSTOMSONG_DIR}...")
     input_jsons = read_jsons(CUSTOMSONG_DIR)
 
     # fetch existing csv file and convert it to jsons
+    print(f"\nReading in csv file {CSV_FILENAME}...")
     input_csv = read_csv()
     input_csv_as_jsons = csv_to_jsons(input_csv)
 
@@ -241,6 +243,7 @@ def main():
     # this functions as a way of importing new songs into the csv,
     # and ensures that the csv acts as the single source of truth
     # (i.e. make sure you're editing the csv, NOT the data.json files)
+    print(f"\nMerging metadata sources...")
     merged_jsons = {}
     for song_id, data_json in input_jsons.items():
         if song_id in input_csv_as_jsons.keys():
@@ -249,14 +252,17 @@ def main():
             merged_jsons[song_id] = data_json
 
     # modify the 'order' field of the jsons
+    print(f"\nUpdating order field...")
     ordered_jsons = update_order(merged_jsons)
 
     # write the merged list of jsons to csv (but only if there are new entries)
+    print(f"\nWriting new {CSV_FILENAME} file...")
     output_csv = jsons_to_csv(ordered_jsons)
     if not DEBUG:
         write_csv(output_csv)
 
     # write the merged list of jsons to files
+    print(f"\nWriting new data.json files...")
     output_jsons = csv_to_jsons(output_csv)
     if not DEBUG:
         assert len(output_jsons) == len(input_jsons)
