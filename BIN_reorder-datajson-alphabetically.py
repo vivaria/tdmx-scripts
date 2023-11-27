@@ -1,11 +1,9 @@
 import os
 import json
 
-CUSTOMSONG_DIR = os.path.join("C:\\", "TaikoTDM", "customSongs")
-
 # Step 1. Read in the existing song data
 song_order = []
-for root, dirs, files in os.walk(CUSTOMSONG_DIR, topdown=True):
+for root, dirs, files in os.walk(os.getcwd(), topdown=True):
     if "data.json" in files:
         json_path = os.path.join(root, "data.json")
         json_dict = json.load(open(json_path, encoding="utf8"))
