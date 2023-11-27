@@ -12,6 +12,7 @@ for root, dirs, files in os.walk(os.getcwd(), topdown=True):
         except KeyError:
             song_name = json_dict["songName"]["text"]
         song_order.append([song_name, json_path])
+print(f"Loaded {len(song_order)} songs.")
 
 # Step 2. Sort the songs so that they're alphabetical
 song_order_sorted = sorted(song_order, key=lambda s: s[0].lower())
@@ -23,6 +24,7 @@ for i, (song_name, json_path) in enumerate(song_order_sorted):
     with open(json_path, "r", encoding="utf8") as infile:
         json_dict = json.load(infile)
     # Change the order to match the alphabetical order
+    print(f"Changing order of '{song_name}' from {json_dict['order']} to {i}.")
     json_dict['order'] = i
     # Write the modified data ack to the file
     with open(json_path, "w", encoding="utf8") as outfile:
