@@ -8,9 +8,14 @@ for root, dirs, files in os.walk(os.getcwd(), topdown=True):
         json_path = os.path.join(root, "data.json")
         json_dict = json.load(open(json_path, encoding="utf-8-sig"))
         try:
-            song_name = json_dict["songName"]["enText"]
+            name_dict = json_dict["songName"]
         except KeyError:
-            song_name = json_dict["songName"]["text"]
+            print(f"Skipping {json_path}, no 'songName' key.")
+            continue
+        try:
+            song_name = name_dict["enText"]
+        except KeyError:
+            song_name = name_dict["text"]
         song_order.append([song_name, json_path])
 print(f"Loaded {len(song_order)} songs.")
 
