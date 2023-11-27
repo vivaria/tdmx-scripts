@@ -1,5 +1,6 @@
 import os
 import json
+from unicodedata import normalize
 
 # Step 1. Read in the existing song data
 song_order = []
@@ -16,6 +17,7 @@ for root, dirs, files in os.walk(os.getcwd(), topdown=True):
             song_name = name_dict["enText"]
         except KeyError:
             song_name = name_dict["text"]
+        song_name = normalize('NFKD', song_name).encode('ascii', 'ignore')
         song_order.append([song_name, json_path])
 print(f"Loaded {len(song_order)} songs.")
 
