@@ -44,3 +44,5 @@ for i, (song_name, json_path) in enumerate(song_order_sorted):
         str_to_write = "\t" + str_to_write[:-1] + "\t}"
         # Write the modified JSON string to the file
         outfile.write(str_to_write)
+
+input("Press Enter to continue...")
