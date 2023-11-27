@@ -33,7 +33,7 @@ for i, (song_name, json_path) in enumerate(song_order_sorted):
     # Change the order to match the alphabetical order
     print(f"Changing order of '{song_name}' from {json_dict['order']} to {i}.")
     json_dict['order'] = i
-    # Write the modified data ack to the file
+    # Write the modified data back to the file
     with open(json_path, "w", encoding="utf-8-sig") as outfile:
         # Get the JSON data to be written, as a string
         str_to_write = json.dumps(json_dict, indent="\t", ensure_ascii=False)
