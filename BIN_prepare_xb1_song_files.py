@@ -53,6 +53,7 @@ import gzip
 import os
 import shutil
 import subprocess
+from subprocess import CalledProcessError
 
 # Valid for TDMX v1.2.2
 KEYS = {
@@ -65,39 +66,54 @@ EXPECTED_HEADER_BYTES = {
 }
 
 
+def is_decrypted(bytestring, filetype, fname):
+    # decrypted songs should start with @UTF marker
+    if filetype == "song":
+        decrypted = bytestring.startswith(b"@UTF")
+    # decrypted fumens should contain the filename starting at byte 10
+    else:
+        assert filetype == "fumen"
+        decrypted = b".bin" in bytestring
+    return decrypted
+
+
+def is_gunzipped(bytestring):
+    measure_seperator = b'\x00' + (b'\xFF' * 24) + b'\x00'
+    return measure_seperator in bytestring
+
+
 def decrypt_file(root, fname, filetype):
-    ext = '.'.join(fname.split('.')[1:])
     fpath = os.path.join(root, fname)
-    tmp_fpath = os.path.join(root, f"temp.{ext}")
+    tmp_fpath = os.path.join(root, f"tempfile")
     with open(fpath, "rb") as file:
-        iv_bytes = file.read(16).hex().upper()
+        bytestring = file.read()
+        iv_bytes = bytestring[:16].hex().upper()
+    if is_decrypted(bytestring, filetype, fname) or is_gunzipped(bytestring):
+        print(f"    {fname} has already been decrypted")
+        return False
+
     command = (f"openssl aes-256-cbc -d -in {fpath} -out {tmp_fpath} "
                f"-K {KEYS[filetype]} -iv {iv_bytes}")
     try:
         subprocess.check_output(command, shell=True)
-        with open(tmp_fpath, "rb") as file:
-            bytestring = file.read()
-        bytestring = bytestring[16:]  # discard iv bytes
-        # decrypted songs should start with @UTF marker
-        if filetype == "song":
-            decrypted = bytestring.startswith(b"@UTF")
-        # decrypted fumens should contain the filename starting at byte 10
-        else:
-            assert filetype == "fumen"
-            decrypted = bytestring[10:].startswith(fname.encode())
-        if decrypted:
-            print(f"  - Successfully decrypted {fname}")
-            with open(tmp_fpath, "wb") as file:
-                file.write(bytestring)
-            os.remove(fpath)
-            shutil.move(tmp_fpath, fpath)
-            return True
-        else:
-            print(f"  - Couldn't find expected bytes in decrypted file")
-            os.remove(tmp_fpath)
-            return False
-    except subprocess.CalledProcessError as e:
-        print(f"  - {fname} either already decrypted or invalid: {e}")
+    except CalledProcessError as e:
+        print(f"  - {fname} is invalid: {e}")
+        return False
+
+    with open(tmp_fpath, "rb") as file:
+        bytestring = file.read()
+    bytestring = bytestring[16:]  # discard iv bytes
+
+    if is_decrypted(bytestring, filetype, fname):
+        print(f"    Successfully decrypted {fname}")
+        with open(tmp_fpath, "wb") as file:
+            file.write(bytestring)
+        os.remove(fpath)
+        shutil.move(tmp_fpath, fpath)
+        return True
+    else:
+        print(f"    Couldn't find expected bytes in decrypted file")
+        os.remove(tmp_fpath)
         return False
 
 
@@ -108,12 +124,12 @@ def gunzip_file(root, fname):
         with gzip.open(fpath, 'rb') as f_in:
             with open(tmp_fpath, 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
-        print(f"  - Succesffuly gunzipped {fname}")
+        print(f"    Successfully gunzipped {fname}")
         os.remove(fpath)
         shutil.move(tmp_fpath, fpath)
         return True
     except Exception as e:
-        print(f"  - {fname} couldn't be gunzipped: {e}")
+        print(f"    {fname} couldn't be gunzipped: {e}")
         return False
 
 
@@ -128,16 +144,17 @@ def main():
 
     print("\nDecrypting song bins...")
     for song_bin in bins:
-        print(f"  - Decrypting {song_bin}...")
+        print(f"\n  - Decrypting {song_bin}...")
         decrypt_file(root=SONG_DIR, fname=song_bin, filetype="song")
 
     print("\nDecrypting + ungzipping fumen files...")
     for folder_name in folders:
-        print(f"  - Decrypting + un-gzipping fumens in {folder_name}...")
+        print(f"\n  - Decrypting + un-gzipping fumens in '{folder_name}/'...")
         folder_path = os.path.join(SONG_DIR, folder_name)
         for fumen in [f for f in os.listdir(folder_path)
                       if f.endswith(".bin") and not f.startswith("song")]:
-            if decrypt_file(root=folder_path, fname=fumen, filetype="fumen"):
+            s = decrypt_file(root=folder_path, fname=fumen, filetype="fumen")
+            if s:
                 gunzip_file(root=folder_path, fname=fumen)
 
     print("\nCopying song files to fumen folders...")
@@ -147,8 +164,9 @@ def main():
         folder_path = os.path.join(SONG_DIR, folder_name)
         dest = os.path.join(folder_path, song_name)
         if not os.path.exists(src):
-            print(f"Fumen folder {folder_name} missing song file")
+            print(f"  - Fumen folder {folder_name} missing song file")
         else:
+            print(f"  - Copying from {src} to {dest}")
             shutil.copy(src, dest)
 
 
