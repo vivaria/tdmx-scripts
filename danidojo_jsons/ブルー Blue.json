@@ -1,0 +1,268 @@
+{
+  "5kyuu": [
+    {
+      "song_id": "poptep",
+      "song_name": "POP TEAM EPIC"
+    },
+    {
+      "song_id": "spl2md",
+      "song_name": "Splatoon 2 Medley"
+    },
+    {
+      "song_id": "th1682",
+      "song_name": "Iro wa Niho e do Chiri nuru o"
+    }
+  ],
+  "4kyuu": [
+    {
+      "song_id": "umtube",
+      "song_name": "YouTube Theme Song"
+    },
+    {
+      "song_id": "clsca",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "wedh",
+      "song_name": "World's End Dance Hall"
+    }
+  ],
+  "3kyuu": [
+    {
+      "song_id": "noshou",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "thgrip",
+      "song_name": "Grip & Break down !! -Tatsujin Edit.-"
+    },
+    {
+      "song_id": "thkero",
+      "song_name": "Kero9destiny"
+    }
+  ],
+  "2kyuu": [
+    {
+      "song_id": "6ne9om",
+      "song_name": "Doki-Doki Mune-Kyun Omatsuri Time"
+    },
+    {
+      "song_id": "mikuaa",
+      "song_name": "Alien Alien"
+    },
+    {
+      "song_id": "rot",
+      "song_name": "XB1"
+    }
+  ],
+  "1kyuu": [
+    {
+      "song_id": "imcagd",
+      "song_name": "Angel Dream"
+    },
+    {
+      "song_id": "mikugr",
+      "song_name": "Ghost Rule"
+    },
+    {
+      "song_id": "psf1op",
+      "song_name": "Tsunagare! Hinogare! Uchiagare!"
+    }
+  ],
+  "1dan": [
+    {
+      "song_id": "natsu",
+      "song_name": "Natsumatsuri"
+    },
+    {
+      "song_id": "clsw",
+      "song_name": "William Tell Overture"
+    },
+    {
+      "song_id": "calib",
+      "song_name": "Soul Calibur II"
+    }
+  ],
+  "2dan": [
+    {
+      "song_id": "kim4ra",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "ikenai",
+      "song_name": "Ikenai Taiyou"
+    },
+    {
+      "song_id": "den",
+      "song_name": "Densetsu no Matsuri"
+    }
+  ],
+  "3dan": [
+    {
+      "song_id": "japari",
+      "song_name": "Yokouso Japari Park e"
+    },
+    {
+      "song_id": "pkmmzs",
+      "song_name": "Mezase Pokémon Master -20th Anniversary-"
+    },
+    {
+      "song_id": "genpe",
+      "song_name": "KAGEKIYO"
+    }
+  ],
+  "4dan": [
+    {
+      "song_id": "thbad",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "sss",
+      "song_name": "super star shooter"
+    },
+    {
+      "song_id": "sweep1",
+      "song_name": "XB1"
+    }
+  ],
+  "5dan": [
+    {
+      "song_id": "mario4",
+      "song_name": "Jump Up, Super Star! Short Version"
+    },
+    {
+      "song_id": "aslt",
+      "song_name": "ASSAULT BGM1"
+    },
+    {
+      "song_id": "blrose",
+      "song_name": "Blue Rose Ruin"
+    }
+  ],
+  "6dan": [
+    {
+      "song_id": "maidra",
+      "song_name": "Aozora No RHAPSODY"
+    },
+    {
+      "song_id": "numu10",
+      "song_name": "Numujika ac.10"
+    },
+    {
+      "song_id": "imc2bm",
+      "song_name": "Tsubomi Yumemiru Rapsodia ~Alma no Michibiki~"
+    }
+  ],
+  "7dan": [
+    {
+      "song_id": "teken6",
+      "song_name": "KARMA(Tatsujin Mix)"
+    },
+    {
+      "song_id": "sqr2",
+      "song_name": "junction"
+    },
+    {
+      "song_id": "jubflw",
+      "song_name": "FLOWER"
+    }
+  ],
+  "8dan": [
+    {
+      "song_id": "irpunk",
+      "song_name": "Oozora to Taiko no Odori"
+    },
+    {
+      "song_id": "jazmen",
+      "song_name": "Minuet"
+    },
+    {
+      "song_id": "rr3dve",
+      "song_name": "Venomous"
+    }
+  ],
+  "9dan": [
+    {
+      "song_id": "thscre",
+      "song_name": "Scream out! -Tatsujin Edit.-"
+    },
+    {
+      "song_id": "rt2wit",
+      "song_name": "Where is the Target?"
+    },
+    {
+      "song_id": "kuraim",
+      "song_name": "Climb! Mt.Parfait"
+    }
+  ],
+  "10dan": [
+    {
+      "song_id": "btu5ar",
+      "song_name": "Yozakura Shanikusai"
+    },
+    {
+      "song_id": "blazer",
+      "song_name": "Pastel Sealane"
+    },
+    {
+      "song_id": "toymat",
+      "song_name": "Toymatic☆Parade!!"
+    }
+  ],
+  "玄人 Kuroto": [
+    {
+      "song_id": "starrr",
+      "song_name": "SstTAarR*"
+    },
+    {
+      "song_id": "godray",
+      "song_name": "God Ray"
+    },
+    {
+      "song_id": "tttt",
+      "song_name": "Toon Town’s Toys’ Tune"
+    }
+  ],
+  "名人 Meijin": [
+    {
+      "song_id": "kkrobo",
+      "song_name": "Kokorobo"
+    },
+    {
+      "song_id": "maru9t",
+      "song_name": "Marukute Hayakute Susamajii Rhythm"
+    },
+    {
+      "song_id": "etring",
+      "song_name": "EterNal Ring"
+    }
+  ],
+  "超人 Chojin": [
+    {
+      "song_id": "tbnito",
+      "song_name": "Tabaneito"
+    },
+    {
+      "song_id": "debstp",
+      "song_name": "DEBSTEP!"
+    },
+    {
+      "song_id": "coquet",
+      "song_name": "Coquette"
+    }
+  ],
+  "達人 Tatsujin": [
+    {
+      "song_id": "clscds",
+      "song_name": "Csardas!"
+    },
+    {
+      "song_id": "rot4",
+      "song_name": "Mada Saitama 2000"
+    },
+    {
+      "song_id": "nobu7g",
+      "song_name": "Dairokuten Maou"
+    }
+  ]
+}

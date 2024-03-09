@@ -1,0 +1,268 @@
+{
+  "5kyuu": [
+    {
+      "song_id": "roki",
+      "song_name": "Roki"
+    },
+    {
+      "song_id": "ia6cho",
+      "song_name": "A Tale of Six Trillion Years and a Night"
+    },
+    {
+      "song_id": "ynlose",
+      "song_name": "LOSER"
+    }
+  ],
+  "4kyuu": [
+    {
+      "song_id": "mikuzs",
+      "song_name": "Zenmai Shoujo Tokei"
+    },
+    {
+      "song_id": "th1682",
+      "song_name": "Iro wa Niho e do Chiri nuru o"
+    },
+    {
+      "song_id": "vfpetr",
+      "song_name": "Ameto Petora"
+    }
+  ],
+  "3kyuu": [
+    {
+      "song_id": "tank",
+      "song_name": "Yawaraka Sensha"
+    },
+    {
+      "song_id": "mikutd",
+      "song_name": "Taiyoukei Disco"
+    },
+    {
+      "song_id": "ynzpcs",
+      "song_name": "Peace Sign"
+    }
+  ],
+  "2kyuu": [
+    {
+      "song_id": "rlnpls",
+      "song_name": "+♂(Plus Danshi)"
+    },
+    {
+      "song_id": "thchil",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "rot",
+      "song_name": "XB1"
+    }
+  ],
+  "1kyuu": [
+    {
+      "song_id": "udtmgl",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "thncrd",
+      "song_name": "Necro Fantasia ~ Arr.Demetori"
+    },
+    {
+      "song_id": "crkvic",
+      "song_name": "VICTORIA"
+    }
+  ],
+  "1dan": [
+    {
+      "song_id": "mikuar",
+      "song_name": "Alkali Rettousei"
+    },
+    {
+      "song_id": "natsu",
+      "song_name": "Natsumatsuri"
+    },
+    {
+      "song_id": "ska",
+      "song_name": "Go Go - Kitchen"
+    }
+  ],
+  "2dan": [
+    {
+      "song_id": "elegy",
+      "song_name": "Sayonara Elegy"
+    },
+    {
+      "song_id": "evensb",
+      "song_name": "Literary Nonsense"
+    },
+    {
+      "song_id": "bforc",
+      "song_name": "Burning Force Medley"
+    }
+  ],
+  "3dan": [
+    {
+      "song_id": "altale",
+      "song_name": "Altale"
+    },
+    {
+      "song_id": "vfshrr",
+      "song_name": "Charles"
+    },
+    {
+      "song_id": "flyawy",
+      "song_name": "Fly away"
+    }
+  ],
+  "4dan": [
+    {
+      "song_id": "sysync",
+      "song_name": "Synchronicity"
+    },
+    {
+      "song_id": "caramt",
+      "song_name": "Caramel Time☆"
+    },
+    {
+      "song_id": "tamlb2",
+      "song_name": "D-Zettai! SAMURAI in the Rain"
+    }
+  ],
+  "5dan": [
+    {
+      "song_id": "jaznoc",
+      "song_name": "Night Jazz Opera 9 No. 2"
+    },
+    {
+      "song_id": "tokkyo",
+      "song_name": "Tokyo Tokkyo-kyo Kyokakyoku Kyokuchou!!"
+    },
+    {
+      "song_id": "xan",
+      "song_name": "Xa"
+    }
+  ],
+  "6dan": [
+    {
+      "song_id": "mgwrt8",
+      "song_name": "Chouren"
+    },
+    {
+      "song_id": "metro",
+      "song_name": "Metal Police"
+    },
+    {
+      "song_id": "imc2bm",
+      "song_name": "Tsubomi Yumemiru Rapsodia ~Alma no Michibiki~"
+    }
+  ],
+  "7dan": [
+    {
+      "song_id": "pixelg",
+      "song_name": "Pixel Galaxy"
+    },
+    {
+      "song_id": "trustg",
+      "song_name": "Trust Game"
+    },
+    {
+      "song_id": "rr3dve",
+      "song_name": "Venomous"
+    }
+  ],
+  "8dan": [
+    {
+      "song_id": "kuzure",
+      "song_name": "Ho-oh Tenbu Mugen Kuzure"
+    },
+    {
+      "song_id": "kooryu",
+      "song_name": "Kooryu"
+    },
+    {
+      "song_id": "7fuku",
+      "song_name": "Geki-un! Shichifuku Happy Crew"
+    }
+  ],
+  "9dan": [
+    {
+      "song_id": "ycoast",
+      "song_name": "Youthful Coaster"
+    },
+    {
+      "song_id": "comona",
+      "song_name": "Comona"
+    },
+    {
+      "song_id": "clotho",
+      "song_name": "Clotho"
+    }
+  ],
+  "10dan": [
+    {
+      "song_id": "sysurf",
+      "song_name": "Surf Zapping"
+    },
+    {
+      "song_id": "sora7x",
+      "song_name": "SORA-VII Cygnus Wall"
+    },
+    {
+      "song_id": "mficta",
+      "song_name": "memoria ficta"
+    }
+  ],
+  "玄人 Kuroto": [
+    {
+      "song_id": "asgbtb",
+      "song_name": "Asagao"
+    },
+    {
+      "song_id": "bluert",
+      "song_name": "OK I’m blue rat"
+    },
+    {
+      "song_id": "stshow",
+      "song_name": "Stick Trick ShowTime!!"
+    }
+  ],
+  "名人 Meijin": [
+    {
+      "song_id": "ten9nr",
+      "song_name": "Tenkyuu no Ritsu"
+    },
+    {
+      "song_id": "iwantu",
+      "song_name": "Ai want U"
+    },
+    {
+      "song_id": "rasens",
+      "song_name": "Rasen Shukai Kidou"
+    }
+  ],
+  "超人 Chojin": [
+    {
+      "song_id": "shgclr",
+      "song_name": "Colorful"
+    },
+    {
+      "song_id": "kahata",
+      "song_name": "Kawatare-doki no Yuuwaku"
+    },
+    {
+      "song_id": "8ka7ki",
+      "song_name": "Hakanaki wa Gensho ni Mau"
+    }
+  ],
+  "達人 Tatsujin": [
+    {
+      "song_id": "rot4",
+      "song_name": "Mada Saitama 2000"
+    },
+    {
+      "song_id": "yugen",
+      "song_name": "Yugen no Ran"
+    },
+    {
+      "song_id": "vixtor",
+      "song_name": "Vixtory"
+    }
+  ]
+}

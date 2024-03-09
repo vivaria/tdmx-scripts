@@ -1,0 +1,268 @@
+{
+  "五級 5th Kyu": [
+    {
+      "song_id": "thmura",
+      "song_name": "Tsuki Ni Murakumo Hana Ni Kaze"
+    },
+    {
+      "song_id": "udtmgl",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "tmbeat",
+      "song_name": "Tell Me Beat"
+    }
+  ],
+  "四級 4th Kyu": [
+    {
+      "song_id": "roki",
+      "song_name": "Roki"
+    },
+    {
+      "song_id": "mikuot",
+      "song_name": "Otome Dissection"
+    },
+    {
+      "song_id": "mikukg",
+      "song_name": "Kagerou Daze"
+    }
+  ],
+  "三級 3rd Kyu": [
+    {
+      "song_id": "memesi",
+      "song_name": "Memeshikute"
+    },
+    {
+      "song_id": "35047727",
+      "song_name": "Unknown"
+    },
+    {
+      "song_id": "20tftr",
+      "song_name": "GO ON ~Into the Future~"
+    }
+  ],
+  "二級 2nd Kyu": [
+    {
+      "song_id": "clsca",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "tank",
+      "song_name": "Yawaraka Sensha"
+    },
+    {
+      "song_id": "mikuh8",
+      "song_name": "Hibana"
+    }
+  ],
+  "一級 1st Kyu": [
+    {
+      "song_id": "tkmdst",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "tnkai2",
+      "song_name": "Is There Still Anything That Love Can Do?"
+    },
+    {
+      "song_id": "3dsop",
+      "song_name": "Kimi to Hibiku Harmony"
+    }
+  ],
+  "初段 1st Dan": [
+    {
+      "song_id": "skorpg",
+      "song_name": "RPG"
+    },
+    {
+      "song_id": "mgwrt",
+      "song_name": "Kikyoku"
+    },
+    {
+      "song_id": "248472626",
+      "song_name": "Kill My Fortune"
+    }
+  ],
+  "二段 2nd Dan": [
+    {
+      "song_id": "u3gino",
+      "song_name": "Usagi no Shippo"
+    },
+    {
+      "song_id": "nee",
+      "song_name": "Ne~e Oshiete"
+    },
+    {
+      "song_id": "20thei",
+      "song_name": "Byoudouin Hou-ou-Don vs Choju-gi-Katsu"
+    }
+  ],
+  "三段 3rd Dan": [
+    {
+      "song_id": "ponpok",
+      "song_name": "PONPOKO RHYTHM"
+    },
+    {
+      "song_id": "rrself",
+      "song_name": "RAGE v.self"
+    },
+    {
+      "song_id": "toabs",
+      "song_name": "Tales of the Abyss"
+    }
+  ],
+  "四段 4th Dan": [
+    {
+      "song_id": "j99",
+      "song_name": "Negaigoto☆Puzzle"
+    },
+    {
+      "song_id": "hiyam2",
+      "song_name": "Tsukikage SASURAI"
+    },
+    {
+      "song_id": "fa3res",
+      "song_name": "Famires Wars"
+    }
+  ],
+  "五段 5th Dan": [
+    {
+      "song_id": "tabetm",
+      "song_name": "Tabetemo Tabetemo"
+    },
+    {
+      "song_id": "dobma2",
+      "song_name": "Mani Mani(Prod. TAKU INOUE)"
+    },
+    {
+      "song_id": "bkmntu",
+      "song_name": "Bakemono Tsukiyo"
+    }
+  ],
+  "六段 6th Dan": [
+    {
+      "song_id": "145734331",
+      "song_name": "Unknown"
+    },
+    {
+      "song_id": "idol",
+      "song_name": "Eringi no Ekubo"
+    },
+    {
+      "song_id": "metro",
+      "song_name": "Metal Police"
+    }
+  ],
+  "七段 7th Dan": [
+    {
+      "song_id": "ai7ndz",
+      "song_name": "Ai Nandaze"
+    },
+    {
+      "song_id": "w3at22",
+      "song_name": "Oresama Pirates"
+    },
+    {
+      "song_id": "imshhb",
+      "song_name": "Honey Heartbeat ～10 Stars Mix～"
+    }
+  ],
+  "八段 8th Dan": [
+    {
+      "song_id": "foofoo",
+      "song_name": "FooFoo Casette"
+    },
+    {
+      "song_id": "gotmor",
+      "song_name": "Got more raves?"
+    },
+    {
+      "song_id": "14451185",
+      "song_name": "Unknown"
+    }
+  ],
+  "九段 9th Dan": [
+    {
+      "song_id": "takamg",
+      "song_name": "Shiritsu Takama-ga-hara Gakuen Koukou Kouka"
+    },
+    {
+      "song_id": "dimens",
+      "song_name": "DIMENSIONS"
+    },
+    {
+      "song_id": "ta5ta5",
+      "song_name": "Turquoise Tachometer"
+    }
+  ],
+  "十段 10th Dan": [
+    {
+      "song_id": "invara",
+      "song_name": "Jotei -Imbiratula-"
+    },
+    {
+      "song_id": "rr3dan",
+      "song_name": "Angel Halo"
+    },
+    {
+      "song_id": "95915381",
+      "song_name": "Unknown"
+    }
+  ],
+  "玄人 Kuroto": [
+    {
+      "song_id": "clsh69",
+      "song_name": "Hungarian Rock"
+    },
+    {
+      "song_id": "dogma1",
+      "song_name": "Central Dogma Pt.1"
+    },
+    {
+      "song_id": "169772882",
+      "song_name": "Unknown"
+    }
+  ],
+  "名人 Meijin": [
+    {
+      "song_id": "insp29",
+      "song_name": "Hito no Okane de Yakiniku o Shokushitai!"
+    },
+    {
+      "song_id": "behemo",
+      "song_name": "Behemoth"
+    },
+    {
+      "song_id": "37487002",
+      "song_name": "Unknown"
+    }
+  ],
+  "超人 Chojin": [
+    {
+      "song_id": "hi4kok",
+      "song_name": "Great Chick Appraiser"
+    },
+    {
+      "song_id": "asmajo",
+      "song_name": "Aka to Shiro Bara no Majo"
+    },
+    {
+      "song_id": "114894751",
+      "song_name": "Unknown"
+    }
+  ],
+  "達人 Tatsujin": [
+    {
+      "song_id": "vt1b2x",
+      "song_name": "≠MM"
+    },
+    {
+      "song_id": "csmdgn",
+      "song_name": "Dangan Notes"
+    },
+    {
+      "song_id": "122847906",
+      "song_name": "Unknown"
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import numpy as np
 
 
 luts = {}
-for root, dirs, files in os.walk("soulgauge_LUTs", topdown=True):
+for root, dirs, files in os.walk("", topdown=True):
     for file in files:
         # Fetch data from csv file
         arr = np.loadtxt(os.path.join(root, file), delimiter=",", dtype=int)

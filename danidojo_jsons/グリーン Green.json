@@ -1,0 +1,268 @@
+{
+  "5kyuu": [
+    {
+      "song_id": "twccp",
+      "song_name": "Candy Pop"
+    },
+    {
+      "song_id": "poptep",
+      "song_name": "POP TEAM EPIC"
+    },
+    {
+      "song_id": "kykgrs",
+      "song_name": "Garasu Wo Ware"
+    }
+  ],
+  "4kyuu": [
+    {
+      "song_id": "gumizk",
+      "song_name": "Zankyou"
+    },
+    {
+      "song_id": "thchi2",
+      "song_name": "Cirno's Perfect Math Class 9th Anniversary Version"
+    },
+    {
+      "song_id": "mikutd",
+      "song_name": "Taiyoukei Disco"
+    }
+  ],
+  "3kyuu": [
+    {
+      "song_id": "vfshrr",
+      "song_name": "Charles"
+    },
+    {
+      "song_id": "ynlose",
+      "song_name": "LOSER"
+    },
+    {
+      "song_id": "rlnpls",
+      "song_name": "+♂(Plus Danshi)"
+    }
+  ],
+  "2kyuu": [
+    {
+      "song_id": "thmhrb",
+      "song_name": "Ephemeral, Great and Splendid Land of Grief"
+    },
+    {
+      "song_id": "zense",
+      "song_name": "Zenzenzense"
+    },
+    {
+      "song_id": "thflnd",
+      "song_name": "Saisyuu Kichiku Imouto Frandre・S"
+    }
+  ],
+  "1kyuu": [
+    {
+      "song_id": "thchil",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "lost1g",
+      "song_name": "The Lost One's Weeping"
+    },
+    {
+      "song_id": "so2ome",
+      "song_name": "Sotsu Omeshiki"
+    }
+  ],
+  "1dan": [
+    {
+      "song_id": "thgrip",
+      "song_name": "Grip & Break down !! -Tatsujin Edit.-"
+    },
+    {
+      "song_id": "vfpetr",
+      "song_name": "Ameto Petora"
+    },
+    {
+      "song_id": "march",
+      "song_name": "The Taiko March"
+    }
+  ],
+  "2dan": [
+    {
+      "song_id": "railgn",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "mikukg",
+      "song_name": "Kagerou Daze"
+    },
+    {
+      "song_id": "nao",
+      "song_name": "Hu-un! Bachio Sensei"
+    }
+  ],
+  "3dan": [
+    {
+      "song_id": "imsjbr",
+      "song_name": "Jibun REST@RT"
+    },
+    {
+      "song_id": "lukfev",
+      "song_name": "Luka Luka★Night Fever"
+    },
+    {
+      "song_id": "rrsam",
+      "song_name": "SAMURAI ROCKET"
+    }
+  ],
+  "4dan": [
+    {
+      "song_id": "kekka2",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "cna4",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "animal",
+      "song_name": "Great! Animale Kaiser!!"
+    }
+  ],
+  "5dan": [
+    {
+      "song_id": "oubu",
+      "song_name": "Knuckle Heads"
+    },
+    {
+      "song_id": "mscl5",
+      "song_name": "Kinniku no Youna Bokura ~Muscle Ai no Theme~"
+    },
+    {
+      "song_id": "magdrm",
+      "song_name": "The Magician’s Dream"
+    }
+  ],
+  "6dan": [
+    {
+      "song_id": "rr1fz",
+      "song_name": "Opa! Opa! RACER - GMT mashup -"
+    },
+    {
+      "song_id": "sqr",
+      "song_name": "Sports Digestdon"
+    },
+    {
+      "song_id": "rgod",
+      "song_name": "Lightning Passion"
+    }
+  ],
+  "7dan": [
+    {
+      "song_id": "ji9cho",
+      "song_name": "Jikuuchou Jikuu 1-ka"
+    },
+    {
+      "song_id": "ac2nad",
+      "song_name": "Night And Day"
+    },
+    {
+      "song_id": "4396bl",
+      "song_name": "Yozakura Bladerz"
+    }
+  ],
+  "8dan": [
+    {
+      "song_id": "stg0",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "crtsun",
+      "song_name": "Sunset Runaway"
+    },
+    {
+      "song_id": "fgod",
+      "song_name": "XB1"
+    }
+  ],
+  "9dan": [
+    {
+      "song_id": "thchi3",
+      "song_name": "Ganso! Genius Cirno-chan☆"
+    },
+    {
+      "song_id": "astero",
+      "song_name": "Asteroid"
+    },
+    {
+      "song_id": "mikuer",
+      "song_name": "Hatsune Miku no Shoushitsu -Gekijouban-"
+    }
+  ],
+  "10dan": [
+    {
+      "song_id": "ri",
+      "song_name": "R.I."
+    },
+    {
+      "song_id": "clstic",
+      "song_name": "Chikochiko"
+    },
+    {
+      "song_id": "deadie",
+      "song_name": "Dead or Die"
+    }
+  ],
+  "玄人 Kuroto": [
+    {
+      "song_id": "gumijk",
+      "song_name": "Heavymetal Fugitive"
+    },
+    {
+      "song_id": "doomn",
+      "song_name": "XB1"
+    },
+    {
+      "song_id": "kienbj",
+      "song_name": "Kien Banjou Kagura"
+    }
+  ],
+  "名人 Meijin": [
+    {
+      "song_id": "clssum",
+      "song_name": "Dokadoka"
+    },
+    {
+      "song_id": "jouzai",
+      "song_name": "Ai to Jouzai no Mori"
+    },
+    {
+      "song_id": "cnctcl",
+      "song_name": "Connect Colors"
+    }
+  ],
+  "超人 Chojin": [
+    {
+      "song_id": "clsdog",
+      "song_name": "Pupper Waltz"
+    },
+    {
+      "song_id": "sei10r",
+      "song_name": "Seiten no Reimei"
+    },
+    {
+      "song_id": "struck",
+      "song_name": "XB1"
+    }
+  ],
+  "達人 Tatsujin": [
+    {
+      "song_id": "spdoto",
+      "song_name": "Shippuudotou"
+    },
+    {
+      "song_id": "souryu",
+      "song_name": "Souryu no Ran"
+    },
+    {
+      "song_id": "poxeid",
+      "song_name": "poxei♦DOON"
+    }
+  ]
+}

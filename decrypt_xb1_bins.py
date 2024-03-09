@@ -57,12 +57,8 @@ from subprocess import CalledProcessError
 
 # Valid for TDMX v1.2.2
 KEYS = {
-    "song": "794A7A4E5651764C42484C625857364269476B337450414C46536665466D5746",
-    "fumen": "51795670785570353734733644547466445348384A4564367834645769357138"
-}
-EXPECTED_HEADER_BYTES = {
-    "song": b"@UTF",
-    "fumen": b".bin"
+    "fumen": "794A7A4E5651764C42484C625857364269476B337450414C46536665466D5746",
+    "song": "51795670785570353734733644547466445348384A4564367834645769357138"
 }
 
 
@@ -134,7 +130,7 @@ def gunzip_file(root, fname):
 
 
 def main():
-    SONG_DIR = os.path.join("C:\\", "Users", "joshu", "Desktop", "XB1")
+    SONG_DIR = os.path.join("C:\\", "users", "joshu", "Desktop", "XB1")
     print(f"Looking for files in {SONG_DIR}... (Expected # of XB1 songs: 77)")
     contents = os.listdir(SONG_DIR)
     folders = [f for f in contents if os.path.isdir(os.path.join(SONG_DIR, f))]
@@ -168,6 +164,8 @@ def main():
         else:
             print(f"  - Copying from {src} to {dest}")
             shutil.copy(src, dest)
+
+    input("Press Enter to continue...")
 
 
 if __name__ == "__main__":
