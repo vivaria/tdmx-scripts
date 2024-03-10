@@ -7,6 +7,8 @@ import re
 import pandas
 import pygsheets
 
+import utils as tdmx_utils
+
 # FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is
 # deprecated and will change in a future version. Call
 # result.infer_objects(copy=False) instead. To opt-in to the future behavior,
@@ -66,6 +68,20 @@ def load_metadata_from_gsheet(sheet_name):
     rows = [[value if value not in BOOLEAN_STR_MAP else BOOLEAN_STR_MAP[value]
              for value in row] for row in df.values.tolist()]
     return header + rows
+
+
+def import_missing_datajson_metadata(metadata_dicts, datajson_paths):
+    for root in datajson_paths:
+        json_path = os.path.join(root, "data.json")
+        json_dict = flatten_dict(tdmx_utils.read_json(json_path))
+        new_row = {key: type_func(json_dict[key]) if key in json_dict
+                   else type_func()
+                   for key, type_func in CSV_HEADERS.items()}
+        new_row = unflatten_dict(new_row)
+        metadata_dicts[json_dict['id']] = new_row
+        print(f"  - Imported {new_row['songName']['text']} "
+              f"({new_row['songSubtitle']['text']})")
+    return metadata_dicts
 
 
 ###############################################################################
@@ -270,9 +286,12 @@ def main():
     print(f"# of `song_[id].bin` files found: {len(song_paths)}")
     datajson_paths = find_datajson_folders(CUSTOMSONG_DIR)
     print(f"# of `data.json` files found:     {len(datajson_paths)}")
-    # TODO: Reconcile differences between spreadsheet and on-disk files:
-    #   - Unseen data.jsons -> Import into `metadata_dicts`
-    #   - Unseen songs, no data.jsons -> Warn of failed conversion?
+
+    # Import missing songs
+    if missing_ids := set(datajson_paths) - set(metadata_dicts):
+        missing_paths = [datajson_paths[song_id] for song_id in missing_ids]
+        metadata_dicts = import_missing_datajson_metadata(metadata_dicts,
+                                                          missing_paths)
 
     # Update metadata fields
     metadata_dicts = update_order(metadata_dicts)  # Expects nested dicts
