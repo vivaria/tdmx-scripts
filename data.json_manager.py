@@ -77,19 +77,6 @@ DEFAULT_CSV_VALUES = {key: type_func()
                       for key, type_func in CSV_HEADERS.items()}
 
 
-def read_csv(fname):
-    with open(fname, 'r', newline='', encoding="utf-8-sig") as f:
-        reader = csv.reader(f)
-        csv_list = [row for row in reader]
-    return csv_list
-
-
-def write_csv(csv_list):
-    with open(CSV_FILENAME, 'w', newline='', encoding="utf-8-sig") as f:
-        writer = csv.writer(f)
-        writer.writerows(csv_list)
-
-
 def load_songs(root_dir):
     jsons, song_dirs = {}, {}
     for root, dirs, files in os.walk(root_dir, topdown=True):
@@ -587,13 +574,9 @@ def main():
     # wrute the merge list of jsons to gsheet
     write_metadata_to_gsheet(ordered_jsons, SHEET_NAME)
 
-    # write the merged list of jsons to csv (but only if there are new entries)
-    print(f"\nWriting new {CSV_FILENAME} file...")
-    output_csv = jsons_to_csv(ordered_jsons)
-    write_csv(output_csv)
-
     # write the merged list of jsons to files
     print(f"\nWriting new data.json files...")
+    output_csv = jsons_to_csv(ordered_jsons)
     output_jsons = csv_to_jsons(output_csv)
     write_jsons(output_jsons, input_paths)
 
