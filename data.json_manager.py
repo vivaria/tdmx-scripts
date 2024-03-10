@@ -301,6 +301,10 @@ def main():
     #   3. gunzipping converted files
     #   4. Fixing score values based on note counts (slow)
     #   5. Computing the starMax field if not already present
+    #   6. Fix TakoTako's borked FumenOffset calculations
+    #   7. Fix Takotako's borked volume values
+    #   8. Fix overlapping UniqueID values
+    #   9. Propagate missing fields (song_id_name)
 
     # Write the metadata
     write_csv(jsons_to_csv(metadata_dicts))        # Sanity check
