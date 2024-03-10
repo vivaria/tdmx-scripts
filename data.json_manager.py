@@ -94,10 +94,6 @@ def write_csv(csv_list):
 def load_songs(root_dir):
     jsons, song_dirs = {}, {}
     for root, dirs, files in os.walk(root_dir, topdown=True):
-        # skip uras added to base game using a separate mod
-        if "tdmx_uras" in root:
-            continue
-
         # check for presence of a fumen song file, and extract the ID from it
         song_id = None
         for file_name in files:
