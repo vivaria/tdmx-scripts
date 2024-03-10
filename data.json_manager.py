@@ -11,7 +11,6 @@ from pathlib import Path
 
 import pandas
 import pygsheets
-from mutagen.wave import WAVE
 from tja2fumen.parsers import parse_fumen
 
 DEBUG = False
@@ -107,11 +106,6 @@ def load_songs(root_dir):
 
         print(f"Processing {song_id}...")
 
-        # Generate .wav audio files for any songs that don't have one
-        if False:
-            path_wav = convert_bin_to_wav(os.path.join(root,
-                                                       f"song_{song_id}.bin"))
-
         # keep track of song directories
         song_dirs[song_id] = root
 
@@ -138,22 +132,6 @@ def load_songs(root_dir):
 
         # sanity check: ensure song_{id}.bin matches 'id': {id}
         # assert song_id == json_dict['id']
-
-        # write volume value from wav file (if it exists)
-        if False and path_wav is not None:
-            wav = WAVE(path_wav)
-            replay_gain = wav['TXXX:replaygain_track_gain'].text[0]
-            replay_gain = float(replay_gain[:-3])
-            json_dict['replaygain'] = replay_gain
-            # Apply ReplayGain to loudest ~100 songs
-            if replay_gain < -7.5:
-                # inverse of dB = 20log(l/10)
-                new_volume = 10**(replay_gain/20) * 1.5
-            else:
-                new_volume = 1.0
-            json_dict['volume'] = 1.0
-            print(f"{song_id}: Loaded volume value ('{new_volume}')")
-            del wav
 
         # Flatten for metadata correction
         json_dict = flatten_dict(json_dict)
@@ -199,23 +177,6 @@ def load_songs(root_dir):
     song_dirs = {k: song_dirs[k] for k in sorted(song_dirs.keys())}
 
     return song_dirs, jsons
-
-
-def convert_bin_to_wav(path_bin):
-    path_out = os.path.join("D:\\", "games", "TaikoTDM", "CustomSongSources",
-                            "converted_wavs")
-    path_vgmstream = os.path.join("C:\\", "Users", "joshu", "repos",
-                                  "vgmstream", "vgmstream-cli.exe")
-    path_acb = f"{path_bin[:-4]}.acb"
-    path_wav = os.path.join(path_out, Path(f"{path_bin[:-4]}.wav").name)
-    if not os.path.exists(path_wav):
-        shutil.copy(path_bin, path_acb)
-        os.system(f'{path_vgmstream} -o "{path_wav}" "{path_acb}"')
-        os.remove(path_acb)
-    if os.path.exists(path_wav):
-        return path_wav
-    else:
-        return None
 
 
 def write_jsons(jsons, paths):
