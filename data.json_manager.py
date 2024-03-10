@@ -7,6 +7,13 @@ import re
 import pandas
 import pygsheets
 
+# FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is
+# deprecated and will change in a future version. Call
+# result.infer_objects(copy=False) instead. To opt-in to the future behavior,
+# set `pd.set_option('future.no_silent_downcasting', True)`
+#   df = df.fillna(nan)
+pandas.set_option('future.no_silent_downcasting', True)
+
 CUSTOMSONG_DIR = os.path.join("C:\\", "TaikoTDM", "customSongs")
 SHEET_NAME = 'taiko-metadata'
 CSV_FILENAME = 'metadata.csv'
