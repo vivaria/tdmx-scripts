@@ -9,6 +9,8 @@ import re
 import math
 from pathlib import Path
 
+import pandas
+import pygsheets
 from mutagen.wave import WAVE
 from tja2fumen.parsers import parse_fumen
 
@@ -546,6 +548,28 @@ def update_ids(paths, jsons):
     return paths, jsons
 
 
+def load_metadata_from_gsheet(sheet_name):
+    gc = pygsheets.authorize(service_file='credentials.json')
+    sh = gc.open(sheet_name)
+    wks = sh.sheet1
+    df = wks.get_as_df()
+    return [df.keys().tolist()] + df.values.tolist()
+
+
+def write_metadata_to_gsheet(metadata, sheet_name):
+    flattened_jsons = {sid: flatten_dict(json_dict)
+                       for sid, json_dict in metadata.items()}
+    sorted_jsons = {sid: {key: type_func(json_dict[key])
+                          for key, type_func in CSV_HEADERS.items()}
+                    for sid, json_dict in flattened_jsons.items()}
+    df_out = pandas.DataFrame.from_dict(sorted_jsons)
+
+    gc = pygsheets.authorize(service_file='credentials.json')
+    sh = gc.open(sheet_name)
+    wks = sh.sheet1
+    wks.set_dataframe(df_out.transpose(), (1, 1))
+
+
 def main():
     # fetch existing songs + metadata within the custom song dir
     print(f"\nLoading songs from {CUSTOMSONG_DIR}...")
@@ -558,8 +582,9 @@ def main():
     # volumes = fetch_volume(um_input_jsons, um_input_paths)
 
     # fetch existing csv file and convert it to jsons
-    print(f"\nReading in csv file {CSV_FILENAME}...")
-    input_csv = read_csv(CSV_FILENAME)
+    SHEET_NAME = 'taiko-metadata'
+    print(f"\nReading in metadata from '{SHEET_NAME}'...")
+    input_csv = load_metadata_from_gsheet(SHEET_NAME)
     input_csv_as_jsons = csv_to_jsons(input_csv)
 
     # copy the metadata from the csv where possible.
@@ -601,6 +626,9 @@ def main():
     # update the volume byte of each song according to field
     print(f"\nUpdating volume...")
     # ordered_jsons = update_volume(ordered_jsons, input_paths, volumes)
+
+    # wrute the merge list of jsons to gsheet
+    write_metadata_to_gsheet(ordered_jsons, SHEET_NAME)
 
     # write the merged list of jsons to csv (but only if there are new entries)
     print(f"\nWriting new {CSV_FILENAME} file...")
