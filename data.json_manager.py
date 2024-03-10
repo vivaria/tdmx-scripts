@@ -260,13 +260,15 @@ def write_metadata_to_gsheet(metadata, sheet_name):
 
 
 def main():
-    # Fetch metadata
+    # Fetch metadata from spreadsheet
     metadata_lists = load_metadata_from_gsheet(SHEET_NAME)  # Flattened keys
     metadata_dicts = csv_to_jsons(metadata_lists)           # Nested dicts
-    datajson_paths = find_datajson_folders(CUSTOMSONG_DIR)
-    song_paths = find_song_folders(CUSTOMSONG_DIR)
     print(f"# of spreadsheet rows loaded:     {len(metadata_dicts)}")
+
+    # Fetch song paths from disk
+    song_paths = find_song_folders(CUSTOMSONG_DIR)
     print(f"# of `song_[id].bin` files found: {len(song_paths)}")
+    datajson_paths = find_datajson_folders(CUSTOMSONG_DIR)
     print(f"# of `data.json` files found:     {len(datajson_paths)}")
     # TODO: Reconcile differences between spreadsheet and on-disk files:
     #   - Unseen data.jsons -> Import into `metadata_dicts`
@@ -288,4 +290,5 @@ def main():
 
 
 if __name__ == "__main__":
+    print()
     main()
