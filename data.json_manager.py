@@ -3,6 +3,7 @@ import json
 import csv
 import unicodedata
 import re
+from copy import deepcopy
 
 import pandas
 import pygsheets
@@ -243,13 +244,17 @@ def write_csv(csv_list):
 
 def write_jsons(jsons, paths):
     for song_id, song_json in jsons.items():
+        json_to_write = deepcopy(song_json)
         if song_id in paths:
             path = paths[song_id]
         else:
             print(f"WARNING: Song '{song_id}' present in spreadsheet, but "
                   f"missing on disk.")
             continue
-        str_to_write = json.dumps(song_json, indent="\t",
+        if len(song_json['date']) > 4:
+            s = f"{song_json['songSubtitle']['text']}「{song_json['date']}」"
+            json_to_write['songSubtitle']['text'] = s
+        str_to_write = json.dumps(json_to_write, indent="\t",
                                   ensure_ascii=False)
         with open(os.path.join(path, "data.json"), "w", encoding="utf-8-sig") \
                 as outfile:
