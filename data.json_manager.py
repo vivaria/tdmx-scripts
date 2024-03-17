@@ -8,6 +8,7 @@ import shutil
 import math
 import gzip
 import subprocess
+import struct
 
 import pandas
 import pygsheets
@@ -359,6 +360,20 @@ def fix_score(json_dict, song_path):
     return json_dict
 
 
+def update_volume(json_dict, par_dir):
+    VOLUME_TO_WRITE = json_dict['volume']
+    if VOLUME_TO_WRITE == 0:
+        VOLUME_TO_WRITE = 1.0
+
+    song_id = json_dict['id']
+    song_path = os.path.join(par_dir, f"song_{song_id}.bin")
+    with open(song_path, mode="rb+") as fp:
+        byte_string = struct.pack(">f", VOLUME_TO_WRITE)
+        fp.seek(0x217)
+        fp.write(byte_string)
+        print(f"Writing {VOLUME_TO_WRITE} for {song_id}.")
+
+
 def safe_filename(string):
     return "".join(c for c in string
                    if c.isalpha() or c.isdigit() or c == ' ').rstrip()
@@ -478,16 +493,16 @@ def main():
         song_json['areFilesGZipped'] = gunzip_files(song_path)
         song_json = fix_score(song_json, song_path)
         song_path = fix_tja_parent_dirname(song_json, song_path)
+        update_volume(song_json, song_path)
         metadata_dicts[song_id] = song_json
         song_paths[song_id] = song_path
 
     # Update metadata fields
     metadata_dicts = update_order(metadata_dicts)  # Expects nested dicts
     # TODO: Reimplement old features:
-    #   1. Updating volume bytes using values from spreadsheet column
-    #   2. Updating IDs using values from spreadsheet column
-    #   3. Fix overlapping UniqueID values
-    #   4. Propagate missing fields (song_id_filename)
+    #   1. Updating IDs using values from spreadsheet column
+    #   2. Fix overlapping UniqueID values
+    #   3. Propagate missing fields (song_id_filename)
 
     # Write the metadata
     write_csv(jsons_to_csv(metadata_dicts))        # Sanity check
