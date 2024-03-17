@@ -268,6 +268,7 @@ def load_missing_datajson_metadata(root):
         json_dict['starMania'],
         json_dict['starUra']
     )
+    json_dict['date'] = '2088-08-08'
     print(f"- Imported {json_dict['songName']['text']} "
           f"({json_dict['songSubtitle']['text']})")
     return json_dict
