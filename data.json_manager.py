@@ -138,6 +138,12 @@ CSV_HEADERS = {
     'songSubtitle_text': str,
     # Custom fields I've added
     'starMax': int,
+    'combinedTier': float,
+    'combinedTierUra': float,
+    'clearTier': str,
+    'dfcTier': str,
+    'clearTierUra': str,
+    'dfcTierUra': str,
     'date': str,
     'debut': str,
     'volume': float,
@@ -423,6 +429,60 @@ def update_order(jsons):
     return ordered_jsons
 
 
+wikiwiki_map = {
+    'Extremely Difficult': 20,
+    'Difficult': 16,
+    'Strong': 12,
+    'Moderate': 8,
+    'Weak': 3,
+    'Misrepresentation': 0,
+}
+
+discord_map = {
+    'SS': 20,
+    'S++': 19,
+    'S+': 18,
+    'S': 17,
+    'A+': 16,
+    'A': 13.5,
+    'B': 11,
+    'C': 8.5,
+    'D': 6,
+    'E': 3.5,
+    'F': 1,
+}
+
+
+def difficult_formula(ww, d):
+    clear = -1 if ww not in wikiwiki_map else wikiwiki_map[ww]
+    dfc = -1 if d not in discord_map else discord_map[d]
+    w_clear, w_dfc = 0.0, 0.0
+    if clear >= 0 and dfc >= 0:
+        w_clear, w_dfc = 0.5, 0.5
+    elif clear >= 0:
+        w_clear = 1.0
+    elif dfc >= 0:
+        w_dfc = 1.0
+    return (w_clear * clear) + (w_dfc * dfc)
+
+
+def compute_difficulty(jsons):
+    for song_id, json_dict in jsons.items():
+        if json_dict['starMania'] == 10:
+            ww = json_dict['clearTier']
+            d = json_dict['dfcTier']
+            json_dict['combinedTier'] = difficult_formula(ww, d)
+        if json_dict['starUra'] == 10:
+            ww = json_dict['clearTierUra']
+            d = json_dict['dfcTierUra']
+            json_dict['combinedTierUra'] = difficult_formula(ww, d)
+            # Copy the ura rating into the oni rating if oni != 10
+            if json_dict['starMania'] != 10:
+                json_dict['combinedTier'] = json_dict['combinedTierUra']
+
+    return jsons
+
+
 ###############################################################################
 #                              Writing functions                              #
 ###############################################################################
@@ -499,6 +559,7 @@ def main():
 
     # Update metadata fields
     metadata_dicts = update_order(metadata_dicts)  # Expects nested dicts
+    metadata_dicts = compute_difficulty(metadata_dicts)
     # TODO: Reimplement old features:
     #   1. Updating IDs using values from spreadsheet column
     #   2. Fix overlapping UniqueID values

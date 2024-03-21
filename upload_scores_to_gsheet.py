@@ -27,6 +27,8 @@ def generate_highscore_spreadsheet(data_jsons, scores):
         base_entry = {
             'SongID': song_id,
             'Genre': genre,
+            '*': "",
+            '*_': "",
             'Title': name,
             'Detail': detail,
             'Subtitle': subtitle,
@@ -43,6 +45,12 @@ def generate_highscore_spreadsheet(data_jsons, scores):
                 continue
             entry = base_entry.copy()
             entry['*'] = int(data_json[f'star{diff}'])
+            if diff == 'Ura':
+                entry["*_"] = data_json['combinedTierUra']
+            else:
+                entry["*_"] = data_json['combinedTier']
+            if entry["*_"] == 0.0:
+                entry["*_"] = ""
             score_dict = score_dicts[index]
             if not score_dict:
                 entries[entry['SongID']] = entry
