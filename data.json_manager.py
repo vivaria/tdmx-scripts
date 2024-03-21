@@ -569,6 +569,19 @@ def main():
     write_csv(jsons_to_csv(metadata_dicts))        # Sanity check
     write_jsons(metadata_dicts, song_paths)        # Expects nested dicts
     write_metadata_to_gsheet(metadata_dicts, SHEET_NAME)
+    
+    print("Metadata uploaded, launching taiko")
+    
+    # Launch taiko
+    subprocess.call(['C:\\TaikoTDM\\Taiko no Tatsujin.exe'])
+    
+    print("Taiko closed, uploading high scores")
+        
+    # Once taiko has been closed, run update script
+    from upload_scores_to_gsheet import main as upload
+    upload()
+
+    input("Press enter to continue...")
 
 
 if __name__ == "__main__":

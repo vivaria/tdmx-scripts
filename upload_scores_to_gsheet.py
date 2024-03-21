@@ -45,13 +45,18 @@ def generate_highscore_spreadsheet(data_jsons, scores):
                 continue
             entry = base_entry.copy()
             entry['*'] = int(data_json[f'star{diff}'])
-            if diff == 'Ura':
-                entry["*_"] = data_json['combinedTierUra']
-            else:
-                entry["*_"] = data_json['combinedTier']
-            if entry["*_"] == 0.0:
-                entry["*_"] = ""
+            if data_json[f'star{diff}'] == 10:
+                if diff == 'Ura':
+                    entry["*_"] = data_json['combinedTierUra']
+                else:
+                    entry["*_"] = data_json['combinedTier']
+                if entry["*_"] == 0.0:
+                    entry["*_"] = ""
             score_dict = score_dicts[index]
+            if diff == 'Ura':
+                entry['Title'] += " (Ura)"
+                entry['SongID'] += "_ura"
+                song_id += "_ura"
             if not score_dict:
                 entries[entry['SongID']] = entry
                 continue
@@ -64,10 +69,9 @@ def generate_highscore_spreadsheet(data_jsons, scores):
             entry['Drumroll'] = (score_dict['h']['r'] if 'r' in score_dict['h']
                                  else 0)
             entry['Combo']    = score_dict['h']['c']
-            if diff == 'Ura':
-                entry['Title'] += " (Ura)"
-                entry['SongID'] += "_ura"
-            entries[entry['SongID']] = entry
+            entries[song_id] = entry
+            # peir
+            # print(str(entry).encode('ascii', 'ignore'))
     return entries
 
 
@@ -84,8 +88,9 @@ def main():
     gc = pygsheets.authorize(service_file='credentials.json')
     sh = gc.open('Taiko no Tatsujin Score Tracker')
     wks = sh.sheet1
-    wks.set_dataframe(df.transpose(), (1, 1))
-
+    print("Loaded sheet...")
+    print(wks.set_dataframe(df.transpose(), (1, 1)))
+    print("Uploaded sheet...")
 
 if __name__ == '__main__':
     sys.exit(main())
