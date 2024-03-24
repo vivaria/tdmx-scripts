@@ -89,8 +89,9 @@ def main():
     sh = gc.open('Taiko no Tatsujin Score Tracker')
     wks = sh.sheet1
     print("Loaded sheet...")
-    print(wks.set_dataframe(df.transpose(), (1, 1)))
+    wks.set_dataframe(df.transpose(), (1, 1))
     print("Uploaded sheet...")
+
 
 if __name__ == '__main__':
     sys.exit(main())

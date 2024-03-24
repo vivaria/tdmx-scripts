@@ -581,8 +581,6 @@ def main():
     from upload_scores_to_gsheet import main as upload
     upload()
 
-    input("Press enter to continue...")
-
 
 if __name__ == "__main__":
     print()
