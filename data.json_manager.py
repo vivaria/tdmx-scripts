@@ -483,6 +483,12 @@ def compute_difficulty(jsons):
     return jsons
 
 
+def fix_song_names(jsons):
+    for song_id, json_dict in jsons.items():
+        json_dict['songFileName'] = f"song_{song_id}"
+    return jsons
+
+
 ###############################################################################
 #                              Writing functions                              #
 ###############################################################################
@@ -560,10 +566,10 @@ def main():
     # Update metadata fields
     metadata_dicts = update_order(metadata_dicts)  # Expects nested dicts
     metadata_dicts = compute_difficulty(metadata_dicts)
+    metadata_dicts = fix_song_names(metadata_dicts)
     # TODO: Reimplement old features:
     #   1. Updating IDs using values from spreadsheet column
     #   2. Fix overlapping UniqueID values
-    #   3. Propagate missing fields (song_id_filename)
 
     # Write the metadata
     write_csv(jsons_to_csv(metadata_dicts))        # Sanity check
