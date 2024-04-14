@@ -85,6 +85,18 @@ def main():
 
     # Convert song data into high score spreadsheet
     entries = generate_highscore_spreadsheet(data_jsons, scores)
+
+    def order_func(item):
+        return [
+            (10 - int(item['*'])),
+            (1_000_000 - int(item['Score'] if item['Score'] else 0)),
+            (20 - float(item['*_'] if item['*_'] else 0)),
+            item['Genre'],
+        ]
+
+    sorted_entries = sorted([j for j in entries.values()], key=order_func)
+    entries = {json_dict['SongID']: json_dict for json_dict in sorted_entries}
+
     df = pandas.DataFrame.from_dict(entries)
     df = df.transpose()
 
