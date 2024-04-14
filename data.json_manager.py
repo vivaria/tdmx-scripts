@@ -525,7 +525,7 @@ def write_metadata_to_gsheet(metadata, sheet_name):
     sorted_jsons = {sid: {key: type_func(json_dict[key])
                           for key, type_func in CSV_HEADERS.items()}
                     for sid, json_dict in sorted(flattened_jsons.items(),
-                                                 key=lambda x: x[1]['date'],
+                                                 key=lambda x: str(x[1]['date']),
                                                  reverse=True)}
     df_out = pandas.DataFrame.from_dict(sorted_jsons)
 
