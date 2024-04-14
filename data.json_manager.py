@@ -24,6 +24,8 @@ import utils as tdmx_utils
 pandas.set_option('future.no_silent_downcasting', True)
 
 CUSTOMSONG_DIR = os.path.join("C:\\", "TaikoTDM", "customSongs")
+PLAYLIST_DIR = os.path.join("C:\\", "TaikoTDM", "BepInEx", "data",
+                            "AdditionalFilterOptions", "CustomPlaylists")
 SHEET_NAME = 'taiko-metadata'
 CSV_FILENAME = 'metadata.csv'
 
@@ -519,6 +521,32 @@ def write_jsons(jsons, paths):
                                   ensure_ascii=False)
         with open(os.path.join(path, "data.json"), "w", encoding="utf-8-sig") \
                 as outfile:
+            outfile.write(str_to_write)
+
+
+def write_playlists(song_jsons):
+    playlists = {
+        'All Songs': lambda j: True
+    }
+    for order, (playlist_name, cond_func) in enumerate(playlists.items(),
+                                                       start=1000):
+        songs = []
+        for song_id, song_json in song_jsons.items():
+            if cond_func(song_id):
+                songs.append({
+                    "songId": song_json['id'],
+                    "genreNo": song_json['genreNo'],
+                    "isDlc": True
+                })
+        playlist_to_write = {
+            "playlistName": playlist_name,
+            "order": order,
+            "songs": songs
+        }
+        str_to_write = json.dumps(playlist_to_write, indent="\t",
+                                  ensure_ascii=False)
+        with open(os.path.join(PLAYLIST_DIR, f"{playlist_name}.json"), "w",
+                  encoding="utf-8-sig") as outfile:
             outfile.write(str_to_write)
 
 
