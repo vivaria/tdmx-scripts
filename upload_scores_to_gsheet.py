@@ -59,7 +59,8 @@ def generate_highscore_spreadsheet(data_jsons, scores):
                 entry['Title'] += " (Ura)"
                 entry['SongID'] += "_ura"
                 song_id += "_ura"
-            if not score_dicts[index]:
+            if ('h' not in score_dicts[index] or
+                    's' not in score_dicts[index]['h']):
                 entries[entry['SongID']] = entry
                 continue
             score_dict = score_dicts[index]
