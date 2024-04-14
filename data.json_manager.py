@@ -146,6 +146,7 @@ CSV_HEADERS = {
     'dfcTierUra': str,
     'date': str,
     'debut': str,
+    'source': str,
     'volume': float,
     'replaygain': float,
     'order': int,
