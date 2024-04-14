@@ -83,13 +83,14 @@ def main():
     # Convert song data into high score spreadsheet
     entries = generate_highscore_spreadsheet(data_jsons, scores)
     df = pandas.DataFrame.from_dict(entries)
+    df = df.transpose()
 
     # Upload high score spreadsheet to Google Sheets
     gc = pygsheets.authorize(service_file='credentials.json')
     sh = gc.open('Taiko no Tatsujin Score Tracker')
     wks = sh.sheet1
     print("Loaded sheet...")
-    wks.set_dataframe(df.transpose(), (1, 1))
+    wks.set_dataframe(df, (1, 1))
     print("Uploaded sheet...")
 
 
