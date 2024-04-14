@@ -108,10 +108,10 @@ def find_datajson_folders(root_dir):
     return datajson_dirs
 
 
-def load_metadata_from_gsheet(sheet_name):
+def load_metadata_from_gsheet(sheet_name, idx=0):
     gc = pygsheets.authorize(service_file='credentials.json')
     sh = gc.open(sheet_name)
-    wks = sh.sheet1
+    wks = sh[idx]
     df = wks.get_as_df()
     header = [df.keys().tolist()]
     # Google Sheets converts boolean values to "FALSE" and "TRUE", so want
