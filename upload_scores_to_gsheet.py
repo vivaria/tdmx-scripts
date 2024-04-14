@@ -19,7 +19,10 @@ from utils import (load_takotako_save_json_with_songids, load_data_jsons,
 def generate_highscore_spreadsheet(data_jsons, scores):
     entries = {}
     for song_id, data_json in data_jsons.items():
-        score_dicts = scores[song_id]
+        if song_id in scores:
+            score_dicts = scores[song_id]
+        else:
+            score_dicts = {}
         genre = GENRES[data_json['genreNo']]
         name = data_json['songName']['text']
         detail = data_json['songDetail']['text']
@@ -52,14 +55,14 @@ def generate_highscore_spreadsheet(data_jsons, scores):
                     entry["*_"] = data_json['combinedTier']
                 if entry["*_"] == 0.0:
                     entry["*_"] = ""
-            score_dict = score_dicts[index]
             if diff == 'Ura':
                 entry['Title'] += " (Ura)"
                 entry['SongID'] += "_ura"
                 song_id += "_ura"
-            if not score_dict:
+            if not score_dicts[index]:
                 entries[entry['SongID']] = entry
                 continue
+            score_dict = score_dicts[index]
             entry['Crown']    = (score_dict['c'] if 'c' in score_dict else 0)
             entry['Score']    = score_dict['h']['s']
             entry['Good']     = score_dict['h']['e']
