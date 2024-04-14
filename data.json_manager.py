@@ -510,8 +510,10 @@ def write_jsons(jsons, paths):
                   f"missing on disk.")
             continue
         if len(song_json['date']) > 4:
-            s = f"{song_json['songSubtitle']['text']}「{song_json['date']}」"
-            json_to_write['songSubtitle']['text'] = s
+            d = f"「{song_json['debut']} - {song_json['date']}」"
+            if song_json['songDetail']['text']:
+                d += f"{song_json['songDetail']['text']}"
+            json_to_write['songDetail']['text'] = d
         str_to_write = json.dumps(json_to_write, indent="\t",
                                   ensure_ascii=False)
         with open(os.path.join(path, "data.json"), "w", encoding="utf-8-sig") \
