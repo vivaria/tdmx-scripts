@@ -15,6 +15,7 @@ import pygsheets
 
 from tja2fumen import parse_fumen
 import utils as tdmx_utils
+import upload_scores_to_gsheet as upload_utils
 
 # FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is
 # deprecated and will change in a future version. Call
@@ -28,6 +29,13 @@ PLAYLIST_DIR = os.path.join("C:\\", "TaikoTDM", "BepInEx", "data",
                             "AdditionalFilterOptions", "CustomPlaylists")
 SHEET_NAME = 'taiko-metadata'
 CSV_FILENAME = 'metadata.csv'
+
+# Load song data from files
+data_jsons = tdmx_utils.load_data_jsons(CUSTOMSONG_DIR)
+_, scores = tdmx_utils.load_takotako_save_json_with_songids(data_jsons.keys())
+
+# Convert song data into high score spreadsheet
+entries = upload_utils.generate_highscore_spreadsheet(data_jsons, scores)
 
 ###############################################################################
 #                               Loading functions                             #
@@ -410,11 +418,12 @@ def fix_tja_parent_dirname(song_json, song_path):
 #                          Processing functions (.bin)                        #
 ###############################################################################
 
+def strip_accents(s):
+    return ''.join(c for c in unicodedata.normalize('NFD', s)
+                   if unicodedata.category(c) != 'Mn')
+
 
 def order_func(item):
-    def strip_accents(s):
-        return ''.join(c for c in unicodedata.normalize('NFD', s)
-                       if unicodedata.category(c) != 'Mn')
     return [
         item['genreNo'],
         (10 - item['starMax']),
@@ -422,10 +431,45 @@ def order_func(item):
     ]
 
 
+def order_func_2(item):
+    song_id = item['id']
+    song_id_ura = song_id + "_ura"
+    score_omote = (0 if (song_id not in entries
+                         or not entries[song_id]['Score'])
+                   else entries[song_id]['Score'])
+    score_ura = (0 if (song_id_ura not in entries
+                       or not entries[song_id_ura]['Score'])
+                 else entries[song_id_ura]['Score'])
+    if score_omote and not score_ura:
+        score_sort = score_omote
+        star_sort = item['starMania']
+    else:
+        score_sort = score_ura
+        star_sort = item['starUra']
+
+    has_score = any([score_ura, score_omote])
+    sort_value = [
+        item['genreNo'],
+        not has_score,
+        (10 - int(star_sort)),
+        (1_000_000 - int(score_sort)),
+        item['songName']['text'],
+    ]
+    return sort_value
+
+
+def order_func_3(item):
+    return [
+        (99999999 - int(item['date'].replace('-', ''))),
+        item['debut'],
+        strip_accents(item['songName']['text']).upper()
+    ]
+
+
 def update_order(jsons):
     ordered_jsons = {}
     ordered_json_list = sorted([j for j in jsons.values()],
-                               key=order_func)
+                               key=order_func_2)
     for new_order, json_file in enumerate(ordered_json_list):
         json_file['order'] = new_order
         ordered_jsons[json_file['id']] = json_file
