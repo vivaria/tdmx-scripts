@@ -443,9 +443,12 @@ def order_func_2(item):
     if score_omote and not score_ura:
         score_sort = score_omote
         star_sort = item['starMania']
-    else:
+    elif score_ura:
         score_sort = score_ura
         star_sort = item['starUra']
+    else:
+        score_sort = 0
+        star_sort = max(item['starMania'], item['starUra'])
 
     has_score = any([score_ura, score_omote])
     sort_value = [
