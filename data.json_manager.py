@@ -7,12 +7,12 @@ from copy import deepcopy
 import shutil
 import math
 import gzip
-import subprocess
 import struct
 
 import pandas
 import pygsheets
 
+from tjaconvert.main import convert_tja
 from tja2fumen import parse_fumen
 import utils as tdmx_utils
 import upload_scores_to_gsheet as upload_utils
@@ -24,8 +24,8 @@ import upload_scores_to_gsheet as upload_utils
 #   df = df.fillna(nan)
 pandas.set_option('future.no_silent_downcasting', True)
 
-CUSTOMSONG_DIR = os.path.join("C:\\", "TaikoTDM", "customSongs")
-PLAYLIST_DIR = os.path.join("C:\\", "TaikoTDM", "BepInEx", "data",
+CUSTOMSONG_DIR = os.path.join("C:\\", "Users", "Joshua", "Saved Games", "TaikoTDM", "customSongs")
+PLAYLIST_DIR = os.path.join("C:\\", "Users", "Joshua", "Saved Games", "TaikoTDM", "BepInEx", "data",
                             "AdditionalFilterOptions", "CustomPlaylists")
 SHEET_NAME = 'taiko-metadata'
 CSV_FILENAME = 'metadata.csv'
@@ -56,53 +56,14 @@ def find_song_folders(root_dir):
     return song_dirs
 
 
-def convert_tja(root_dir):
-    print(f"- Converting {root_dir}...")
-    raw_output = subprocess.Popen(["TJAConvert.exe", root_dir],
-                                  stdout=subprocess.PIPE).communicate()[0]
-    try:
-        decoded_output = raw_output.decode("utf-16").strip("\r\n")
-    except UnicodeError:
-        raw_output = raw_output.split(b"\r\n")
-        decoded_output = []
-        for output in raw_output:
-            for encoding in ["utf-8", "utf-16"]:
-                try:
-                    decoded_output.append(output.decode(encoding=encoding))
-                except UnicodeError:
-                    continue
-        decoded_output = "".join(decoded_output)
-    gen_dir = [f for f in os.listdir(root_dir) if "[GENERATED]" in f]
-    if gen_dir:
-        gen_dir = gen_dir[0]
-        generate_conversion_json(root_dir, gen_dir)
-        gen_dir = os.path.join(root_dir, gen_dir)
-    else:
-        gen_dir = None
-    return decoded_output.strip("\r\n"), gen_dir
-
-
-def generate_conversion_json(root_dir, gen_dir):
-    json_dict = {
-        "i": [{
-            "f": os.path.join(".", gen_dir),
-            "a": 1,
-            "s": True,
-            "v": 2,
-            "e": 0
-        }]
-    }
-    with open(os.path.join(root_dir, 'conversion.json'),
-              'w', encoding="utf-16-le") as f:
-        json.dump(json_dict, f, separators=(',', ':'))
-
-
 def find_datajson_folders(root_dir):
     datajson_dirs = {}
     for root, dirs, files in os.walk(root_dir, topdown=True):
         if any([f.endswith(".tja") for f in files]) and not dirs:
-            output, gen_dir = convert_tja(root)
-            print(f"  {output}")
+            errno, output, gen_dir = convert_tja(root)
+            if errno != 0:
+                print(f"TJAConvert.exe failed with exit code {errno}\n")
+            print(output)
             if gen_dir:
                 root = gen_dir
         json_path = os.path.join(root, "data.json")
@@ -287,6 +248,7 @@ def load_missing_datajson_metadata(root):
         json_dict['starUra']
     )
     json_dict['date'] = '2088-08-08'
+    json_dict['songName']['font'] = "1"
     print(f"- Imported {json_dict['songName']['text']} "
           f"({json_dict['songSubtitle']['text']})")
     return json_dict
@@ -304,7 +266,7 @@ def gunzip_file(root, fname):
         shutil.move(tmp_fpath, fpath)
         return True
     except Exception as e:
-        print(f"    {fname} couldn't be gunzipped: {e}")
+        # print(f"    {fname} couldn't be gunzipped: {e}")
         return False
 
 
@@ -312,6 +274,7 @@ def gunzip_files(root):
     for file in os.listdir(root):
         if file.endswith(".bin"):
             gunzip_file(root, file)
+    print("All files gunzipped!")
     return False
 
 
@@ -451,13 +414,23 @@ def order_func_2(item):
         star_sort = max(item['starMania'], item['starUra'])
 
     has_score = any([score_ura, score_omote])
-    sort_value = [
-        item['genreNo'],
-        not has_score,
-        (10 - int(star_sort)),
-        (1_000_000 - int(score_sort)),
-        item['songName']['text'],
-    ]
+    if has_score:
+        sort_value = [
+            "1",
+            item['genreNo'],
+            (10 - int(star_sort)),
+            (1_000_000 - int(score_sort)),
+            item['songName']['text'],
+        ]
+    else:
+        sort_value = [
+            "2",
+            item['genreNo'],
+            (99999999 - int(item['date'].replace('-', ''))),
+            item['debut'],
+            strip_accents(item['songName']['text']).upper()
+        ]
+
     return sort_value
 
 
@@ -556,14 +529,19 @@ def write_jsons(jsons, paths):
         if song_id in paths:
             path = paths[song_id]
         else:
-            print(f"WARNING: Song '{song_id}' present in spreadsheet, but "
-                  f"missing on disk.")
+            if song_json['source'] != "MISSING":
+                # If song is marked as MISSING, then it's known to be missing.
+                # So, only emit an error if we *expect* a source on disk.
+                print(f"WARNING: Song '{song_id}' present in spreadsheet, but "
+                      f"missing on disk.")
             continue
         if len(song_json['date']) > 4:
             d = f"「{song_json['debut']} - {song_json['date']}」"
             if song_json['songDetail']['text']:
                 d += f"{song_json['songDetail']['text']}"
             json_to_write['songDetail']['text'] = d
+        if song_id.isdigit():
+            pass  # json_to_write['songName']['text'] += ' *'
         str_to_write = json.dumps(json_to_write, indent="\t",
                                   ensure_ascii=False)
         with open(os.path.join(path, "data.json"), "w", encoding="utf-8-sig") \
@@ -619,22 +597,29 @@ def write_metadata_to_gsheet(metadata, sheet_name):
 
 
 def main():
+    # Upload high scores since last play
+    # print("Uploading past high scores")
+    # from upload_scores_to_gsheet import main as upload
+    # upload()
+
+    # Fetch song paths from disk
+    datajson_paths = find_datajson_folders(CUSTOMSONG_DIR)
+    print(f"\n# of `data.json` files found:     {len(datajson_paths)}")
+    song_paths = find_song_folders(CUSTOMSONG_DIR)
+    print(f"# of `song_[id].bin` files found: {len(song_paths)}")
+
     # Fetch metadata from spreadsheet
     metadata_lists = load_metadata_from_gsheet(SHEET_NAME)  # Flattened keys
     metadata_dicts = csv_to_jsons(metadata_lists)           # Nested dicts
-    print(f"# of spreadsheet rows loaded:     {len(metadata_dicts)}")
-
-    # Fetch song paths from disk
-    song_paths = find_song_folders(CUSTOMSONG_DIR)
-    print(f"# of `song_[id].bin` files found: {len(song_paths)}")
-    datajson_paths = find_datajson_folders(CUSTOMSONG_DIR)
-    print(f"# of `data.json` files found:     {len(datajson_paths)}")
+    print(f"# of spreadsheet rows loaded:     {len(metadata_dicts)}\n")
 
     # Import newly-added songs (e.g. TJAs) and fix them up
-    for song_id in set(datajson_paths) - set(metadata_dicts):
+    for song_id in (list(set(datajson_paths) - set(metadata_dicts))
+                    + []):
         song_path = datajson_paths[song_id]
         song_json = load_missing_datajson_metadata(song_path)
-        song_json['areFilesGZipped'] = gunzip_files(song_path)
+        gunzip_files(song_path)
+        song_json['areFilesGZipped'] = False
         song_json = fix_score(song_json, song_path)
         song_path = fix_tja_parent_dirname(song_json, song_path)
         update_volume(song_json, song_path)
@@ -650,20 +635,15 @@ def main():
     #   2. Fix overlapping UniqueID values
 
     # Write the metadata
+    print("Writing metadata to metadata.csv...")
     write_csv(jsons_to_csv(metadata_dicts))        # Sanity check
+    print("Writing metadata to song data.json files...")
     write_jsons(metadata_dicts, song_paths)        # Expects nested dicts
+    print(f"Uploading metadata to Google Sheet '{SHEET_NAME}'...")
     write_metadata_to_gsheet(metadata_dicts, SHEET_NAME)
     
-    print("Metadata uploaded, launching taiko")
-    
-    # Launch taiko
-    subprocess.call(['C:\\TaikoTDM\\Taiko no Tatsujin.exe'])
-    
-    print("Taiko closed, uploading high scores")
-        
-    # Once taiko has been closed, run update script
-    from upload_scores_to_gsheet import main as upload
-    upload()
+    # print("Metadata uploaded, launching taiko")
+    # subprocess.call(['C:\\TaikoTDM\\Taiko no Tatsujin.exe'])
 
 
 if __name__ == "__main__":

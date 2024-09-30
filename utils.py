@@ -3,7 +3,7 @@ import json
 
 from murmurhash2 import murmurhash2
 
-__tdmx_dir__ = os.path.join("C:\\", "TaikoTDM")
+__tdmx_dir__ = os.path.join("C:\\", "Users", "Joshua", "Saved Games", "TaikoTDM")
 __custom_dir__ = os.path.join(__tdmx_dir__, "customSongs")
 __takotako_save__ = os.path.join(__tdmx_dir__, "TakoTako", "saves",
                                  "save.json")
